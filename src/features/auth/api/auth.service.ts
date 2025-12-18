@@ -12,7 +12,7 @@ export const authApi = apiSlice.injectEndpoints({
     register: b.mutation<ApiResponse<null>, AuthBody>({
       query: (body) => ({
         url: "/auth/register",
-        smethod: "POST",
+        method: "POST",
         body,
       }),
     }),

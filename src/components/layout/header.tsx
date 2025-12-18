@@ -17,7 +17,7 @@ export function Header() {
       </Container>
 
       {/* Divider */}
-      <div className="h-0.5 mt-1 sm:m-0 w-full bg-linear-to-r from-transparent via-white/10 to-transparent " />
+      <div className="h-px mt-1 sm:m-0 w-full bg-linear-to-r from-transparent via-white/10 to-transparent " />
     </header>
   );
 }

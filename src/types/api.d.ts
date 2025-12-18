@@ -40,3 +40,5 @@ export type RequestItem = {
 };
 
 export type OwnerRequestItem = RequestItem & { user_email: string };
+
+export type AuthRole = "guest" | "owner";

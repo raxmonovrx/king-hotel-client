@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { digitsOnly, groupThousands } from "@/lib/number-format";
 import type { RequestCreateBody } from "@/types/api";
 
 export default function Home() {
@@ -33,8 +34,13 @@ export default function Home() {
 
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
-  const [budgetInput, setBudgetInput] = useState("");
-  const [guestsInput, setGuestsInput] = useState("");
+
+  const [budgetRaw, setBudgetRaw] = useState(""); // faqat raqamlar
+  const [budgetFocused, setBudgetFocused] = useState(false);
+
+  const [guestsRaw, setGuestsRaw] = useState("");
+  const [guestsFocused, setGuestsFocused] = useState(false);
+
   const [phoneInput, setPhoneInput] = useState("");
   const [telegramInput, setTelegramInput] = useState("");
 
@@ -44,7 +50,9 @@ export default function Home() {
   ) => setForm((p) => ({ ...p, [key]: value }));
 
   return (
-    <Container className="animate__animated animate__fadeIn">
+    <Container className="animate__animated animate__fadeIn space-y-10">
+      {/* <Card className="border-white/10 bg-linear-to-b from-[#0f0f18] to-[#0b0b12] rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_80px_rgba(0,0,0,0.55)]"></Card> */}
+
       {/* REQUEST FORM */}
       <Card className="border-white/10 bg-linear-to-b from-[#0f0f18] to-[#0b0b12] rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_80px_rgba(0,0,0,0.55)]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(124,58,237,0.18),transparent_55%)]" />
@@ -99,15 +107,16 @@ export default function Home() {
             <div>
               <label className="mb-1 block text-sm text-white/80">Гостей</label>
               <Input
-                type="number"
-                pattern="[0-9]*"
+                type="text"
+                inputMode="numeric"
                 placeholder="10"
-                value={guestsInput}
+                value={guestsFocused ? guestsRaw : groupThousands(guestsRaw)}
+                onFocus={() => setGuestsFocused(true)}
+                onBlur={() => setGuestsFocused(false)}
                 onChange={(e) => {
-                  const v = e.target.value;
-                  if (!/^\d*$/.test(v)) return;
-                  setGuestsInput(v);
-                  set("guests", v === "" ? 0 : Number(v));
+                  const raw = digitsOnly(e.target.value);
+                  setGuestsRaw(raw);
+                  set("guests", raw === "" ? 0 : Number(raw));
                 }}
               />
             </div>
@@ -124,18 +133,14 @@ export default function Home() {
               <div className="flex gap-2">
                 <Input
                   inputMode="numeric"
-                  pattern="[0-9]*"
                   placeholder="3000"
-                  value={budgetInput}
+                  value={budgetFocused ? budgetRaw : groupThousands(budgetRaw)}
+                  onFocus={() => setBudgetFocused(true)}
+                  onBlur={() => setBudgetFocused(false)}
                   onChange={(e) => {
-                    const v = e.target.value;
-
-                    // faqat raqam yoki bo‘sh string
-                    if (!/^\d*$/.test(v)) return;
-
-                    setBudgetInput(v);
-
-                    set("budget_per_night", v === "" ? 0 : Number(v));
+                    const raw = digitsOnly(e.target.value);
+                    setBudgetRaw(raw);
+                    set("budget_per_night", raw === "" ? 0 : Number(raw));
                   }}
                 />
 
