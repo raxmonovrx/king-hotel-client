@@ -9,7 +9,7 @@ export function AppLayout() {
       <div className="mx-auto min-h-screen max-w-360">
         <Header />
 
-        <main className="px-6 py-10">
+        <main className="px-0 py-10">
           <Outlet />
         </main>
       </div>
