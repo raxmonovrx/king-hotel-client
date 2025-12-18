@@ -18,17 +18,18 @@ export default function OwnerLoginPage() {
   const [password, setPassword] = useState("");
 
   return (
-    <Container className="">
+    <Container className="animate__animated animate__fadeIn">
       <div className="flex items-center justify-center">
         <Card
           className={[
             cardClass,
-            "relative w-full max-w-sm overflow-hidden rounded-2xl",
+            "w-full sm:max-w-sm overflow-hidden rounded-2xl",
             "shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_80px_rgba(0,0,0,0.55)]",
           ].join(" ")}
         >
-          {/* soft glow */}
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(124,58,237,0.18),transparent_55%)]" />
+          {/* soft glow */}
+          {/* <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(124,58,237,0.18),transparent_55%)]" /> */}
 
           <CardHeader className="relative space-y-2 text-center">
             <h1 className="text-2xl font-semibold text-white">

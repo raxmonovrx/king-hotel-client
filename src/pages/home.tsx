@@ -44,9 +44,11 @@ export default function Home() {
   ) => setForm((p) => ({ ...p, [key]: value }));
 
   return (
-    <Container>
+    <Container className="animate__animated animate__fadeIn">
       {/* REQUEST FORM */}
-      <Card className="border-white/10 bg-linear-to-b from-[#0f0f18] to-[#0b0b12]">
+      <Card className="border-white/10 bg-linear-to-b from-[#0f0f18] to-[#0b0b12] rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_80px_rgba(0,0,0,0.55)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(124,58,237,0.18),transparent_55%)]" />
+
         <CardHeader className="space-y-2">
           <h1 className="text-2xl font-semibold text-white">
             Найдите идеальное жилье без поиска
