@@ -6,7 +6,7 @@ const base =
 
 export function RoleSwitch() {
   return (
-    <div className="flex rounded-xl gap-2 border border-white/10 bg-[#14141d] p-1">
+    <div className="flex rounded-xl gap-2 border border-white/10 bg-[#0f0f18] p-1">
       <NavLink
         to="/"
         className={({ isActive }) =>

@@ -29,7 +29,7 @@ export function DatePicker({ value, onChange, placeholder }: Props) {
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? format(value, "dd/MM/yyyy") : placeholder}
+          {value ? format(value, "dd.MM.yyyy") : placeholder}
         </Button>
       </PopoverTrigger>
 

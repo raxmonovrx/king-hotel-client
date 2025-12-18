@@ -23,7 +23,7 @@ export default function Home() {
     check_in: "",
     check_out: "",
     guests: 1,
-    budget_per_night: 0,
+    budget_per_night: 1,
     currency: "RUB",
     wishes: "",
     contact_name: "",
@@ -33,6 +33,10 @@ export default function Home() {
 
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
+  const [budgetInput, setBudgetInput] = useState("");
+  const [guestsInput, setGuestsInput] = useState("");
+  const [phoneInput, setPhoneInput] = useState("");
+  const [telegramInput, setTelegramInput] = useState("");
 
   const set = <K extends keyof RequestCreateBody>(
     key: K,
@@ -94,9 +98,15 @@ export default function Home() {
               <label className="mb-1 block text-sm text-white/80">Гостей</label>
               <Input
                 type="number"
-                min={1}
-                value={form.guests}
-                onChange={(e) => set("guests", Number(e.target.value))}
+                pattern="[0-9]*"
+                placeholder="10"
+                value={guestsInput}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  if (!/^\d*$/.test(v)) return;
+                  setGuestsInput(v);
+                  set("guests", v === "" ? 0 : Number(v));
+                }}
               />
             </div>
           </div>
@@ -111,11 +121,20 @@ export default function Home() {
 
               <div className="flex gap-2">
                 <Input
-                  type="number"
-                  value={form.budget_per_night}
-                  onChange={(e) =>
-                    set("budget_per_night", Number(e.target.value))
-                  }
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="3000"
+                  value={budgetInput}
+                  onChange={(e) => {
+                    const v = e.target.value;
+
+                    // faqat raqam yoki bo‘sh string
+                    if (!/^\d*$/.test(v)) return;
+
+                    setBudgetInput(v);
+
+                    set("budget_per_night", v === "" ? 0 : Number(v));
+                  }}
                 />
 
                 <Select
@@ -154,17 +173,58 @@ export default function Home() {
               Ваши контакты для связи
             </h3>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <Input
-                placeholder="Ваше имя"
-                value={form.contact_name}
-                onChange={(e) => set("contact_name", e.target.value)}
-              />
-              <Input
-                placeholder="Телефон или Telegram"
-                value={form.phone}
-                onChange={(e) => set("phone", e.target.value)}
-              />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              {/* NAME */}
+              <div>
+                <label className="mb-1 block text-sm text-white/80">Имя</label>
+                <Input
+                  placeholder="Ваше имя"
+                  value={form.contact_name}
+                  className="capitalize"
+                  onChange={(e) => set("contact_name", e.target.value)}
+                />
+              </div>
+
+              {/* PHONE */}
+              <div>
+                <label className="mb-1 block text-sm text-white/80">
+                  Телефон
+                </label>
+                <Input
+                  placeholder="+998901234567"
+                  value={phoneInput}
+                  inputMode="numeric"
+                  onChange={(e) => {
+                    let v = e.target.value;
+                    if (!v.startsWith("+")) v = "+" + v.replace(/\+/g, "");
+                    const digits = v.slice(1).replace(/\D/g, "");
+                    const next = "+" + digits;
+
+                    setPhoneInput(next);
+                    set("phone", next);
+                  }}
+                />
+              </div>
+
+              {/* TELEGRAM */}
+              <div>
+                <label className="mb-1 block text-sm text-white/80">
+                  Telegram
+                </label>
+                <Input
+                  placeholder="@username"
+                  value={telegramInput}
+                  onChange={(e) => {
+                    let v = e.target.value;
+                    if (!v.startsWith("@")) v = "@" + v.replace(/@/g, "");
+                    const username = v.slice(1).replace(/[^a-zA-Z0-9_]/g, "");
+
+                    const next = "@" + username;
+                    setTelegramInput(next);
+                    set("telegram", next);
+                  }}
+                />
+              </div>
             </div>
           </div>
 
