@@ -6,7 +6,7 @@ export function OwnerGuard() {
   const user = useAppSelector(selectUser);
 
   // login bo'lmasa owner-login ga yuboramiz
-  if (!user) return <Navigate to="/owner-login" replace />;
+  if (!user) return <Navigate to="/owner" replace />;
 
   // login bor, lekin owner emas
   if (user.role !== "owner") return <Navigate to="/" replace />;
