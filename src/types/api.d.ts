@@ -4,6 +4,14 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+export type UserRole = "guest" | "owner";
+
+export type AuthUser = {
+  id: string;
+  email: string;
+  role: UserRole;
+};
+
 // =====================
 // Types
 // =====================
@@ -42,3 +50,8 @@ export type RequestItem = {
 export type OwnerRequestItem = RequestItem & { user_email: string };
 
 export type AuthRole = "guest" | "owner";
+
+export type OwnerRequestsResponse = {
+  totalCount: number;
+  requests: OwnerRequestItem[];
+};

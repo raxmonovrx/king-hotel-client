@@ -28,7 +28,7 @@ export const baseQueryWithReauth: BaseQueryFn<
 };
 
 // RETRY WRAPPER
-const baseQueryWithRetry = retry(baseQueryWithReauth, { maxRetries: 2 });
+const baseQueryWithRetry = retry(baseQueryWithReauth, { maxRetries: 0 });
 
 // API SLICE
 export const apiSlice = createApi({

@@ -1,7 +1,7 @@
 import { apiSlice } from "@/app/api.service";
 import type {
   ApiResponse,
-  OwnerRequestItem,
+  OwnerRequestsResponse,
   RequestCreateBody,
   RequestItem,
   RequestStatus,
@@ -33,7 +33,7 @@ export const requestsApi = apiSlice.injectEndpoints({
 
     // #3 owner requests (filter by status)
     ownerRequests: builder.query<
-      ApiResponse<OwnerRequestItem[]>,
+      ApiResponse<OwnerRequestsResponse>,
       { status?: RequestStatus } | void
     >({
       query: (arg) => ({
